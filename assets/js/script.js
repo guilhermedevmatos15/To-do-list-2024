@@ -1,13 +1,13 @@
 const $input = document.querySelector('input');
 const $btnAdd = document.querySelector('form .btn');
 const $tasks = document.querySelector('.tasks');
+
 const $editMenu = document.querySelector('body > .edit');
 const $editInput = $editMenu.querySelector('form input');
 const $editBtnConf = $editMenu.querySelector('[data-func="edit"]');
 const $editClose = $editMenu.querySelector('[data-func="cancel"]');
 const $editSpan = $editMenu.querySelector('p span');
 
-const verifyInput = (inputElement) => Boolean(inputElement.value);
 const closeEditMenu = () => {
    $editMenu.classList.remove('active');
    $editInput.value = '';
@@ -52,8 +52,8 @@ const editTask = (id) => {
    $editInput.value = $taskText.textContent;
    $editSpan.innerHTML = $taskText.textContent;
 
-   $editBtnConf.addEventListener('click', () => {
-      if (verifyInput($editInput)) {
+   const newClickHandler = () => {
+      if ($editInput.value) {
          tasksArr = tasksArr.map((task) => {
             if (task.id === id) {
                return { id, text: $editInput.value };
@@ -66,11 +66,18 @@ const editTask = (id) => {
          alert('Preencha o campo de edição!');
          $editInput.focus();
       }
-   });
+      
+      // Remove o listener após a confirmação para evitar múltiplas execuções
+      $editBtnConf.removeEventListener('click', newClickHandler);
+   };
+
+   // Certifique-se de que o evento anterior seja removido
+   $editBtnConf.removeEventListener('click', newClickHandler);
+   $editBtnConf.addEventListener('click', newClickHandler);
 };
 
 $btnAdd.addEventListener('click', () => {
-   if (verifyInput($input)) {
+   if ($input.value) {
       createTask($input.value.trim());
       $input.focus();
       $input.value = '';
