@@ -52,7 +52,7 @@ const editTask = (id) => {
    $editInput.value = $taskText.textContent;
    $editSpan.innerHTML = $taskText.textContent;
 
-   $editBtnConf.addEventListener('click', () => {
+   const newClickHandler = () => {
       if (verifyInput($editInput)) {
          tasksArr = tasksArr.map((task) => {
             if (task.id === id) {
@@ -66,7 +66,14 @@ const editTask = (id) => {
          alert('Preencha o campo de edição!');
          $editInput.focus();
       }
-   });
+      
+      // Remove o listener após a confirmação para evitar múltiplas execuções
+      $editBtnConf.removeEventListener('click', newClickHandler);
+   };
+
+   // Certifique-se de que o evento anterior seja removido
+   $editBtnConf.removeEventListener('click', newClickHandler);
+   $editBtnConf.addEventListener('click', newClickHandler);
 };
 
 $btnAdd.addEventListener('click', () => {
