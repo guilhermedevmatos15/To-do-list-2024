@@ -23,7 +23,7 @@
 
       <div>
          <form action="#">
-            <input type="text" maxlength="100" />
+            <input type="text" maxlength="100" placeholder="Tarefing..." />
             <button class="btn"><i class="fa-solid fa-plus"></i> Add</button>
          </form>
 
@@ -33,10 +33,30 @@
 
       <p>
          Development by
-         <a href="https://github.com/guilhermedevmatos15" target="_blank" rel="nofollow"
+         <a
+            href="https://github.com/guilhermedevmatos15"
+            target="_blank"
+            rel="nofollow"
             >@https://github.com/guilhermedevmatos15</a
          >
       </p>
+
+      <div class="edit active">
+         <h2>Editing: <span class="edit-id"></span></h2>
+
+         <form action="#">
+            <input type="text" maxlength="100" placeholder="Tarefing..." />
+            <button class="btn"><i class="fa-solid fa-pen"></i> Edit</button>
+            <button class="btn">
+               <i class="fa-solid fa-xmark"></i> Cancel
+            </button>
+         </form>
+
+         <p>
+            Before:
+            <span></span>
+         </p>
+      </div>
 
       <!-- ? JS -->
       <script src="./assets/js/script.js"></script>
