@@ -21,19 +21,43 @@ const renderTasks = () => {
 
    tasksArr.forEach((task) => {
       $tasks.innerHTML += `
-         <div class="task" data-id="${task.id}">
-            <span class="task-text">${task.text}</span>
-            <i class="task-icon fa-solid fa-pen" title="Edit" onClick="editTask(${task.id})"></i>
-            <i class="task-icon fa-solid fa-trash" title="Delete" onClick="deleteTask(${task.id})"></i>
+         <div class="task ${task.completed ? 'completed' : ''}" data-id="${
+         task.id
+      }">
+            <span class="task-text" onClick="completedTask(${task.id})">${
+         task.text
+      }</span>
+            <i class="task-icon fa-solid fa-pen" title="Edit" onClick="editTask(${
+               task.id
+            })"></i>
+            <i class="task-icon fa-solid fa-trash" title="Delete" onClick="deleteTask(${
+               task.id
+            })"></i>
          </div>
       `;
    });
+};
+
+const completedTask = (id) => {
+   tasksArr = tasksArr.map((task) => {
+      if (task.id === id) {
+         return {
+            id: task.id,
+            text: task.text,
+            completed: !task.completed,
+         };
+      }
+      return task;
+   });
+
+   renderTasks();
 };
 
 const createTask = (text) => {
    tasksArr.push({
       id: tasksArr.length + 1,
       text,
+      completed: false,
    });
    renderTasks();
 };
@@ -56,7 +80,7 @@ const editTask = (id) => {
       if ($editInput.value) {
          tasksArr = tasksArr.map((task) => {
             if (task.id === id) {
-               return { id, text: $editInput.value };
+               return { id, text: $editInput.value, completed: task.completed };
             }
             return task;
          });
@@ -66,7 +90,7 @@ const editTask = (id) => {
          alert('Preencha o campo de edição!');
          $editInput.focus();
       }
-      
+
       // Remove o listener após a confirmação para evitar múltiplas execuções
       $editBtnConf.removeEventListener('click', newClickHandler);
    };

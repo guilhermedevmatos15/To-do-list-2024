@@ -138,6 +138,7 @@ form .btn {
 .task .task-text {
    width: 80%;
    overflow-x: auto;
+   cursor: pointer;
 }
 
 .task .task-icon {
@@ -149,6 +150,14 @@ form .btn {
 }
 .task .task-icon.fa-trash:hover {
    color: var(--color-02);
+}
+
+/* Task completed */
+.task.completed {
+   background-color: #acff2f76;
+}
+.task.completed .task-text {
+   text-decoration: dashed;
 }
 
 /* Edit menu */
